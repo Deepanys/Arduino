@@ -1,0 +1,300 @@
+int relay=2,
+    led2=3,
+    btnup=1,
+    btndown=0,
+    enter=4,
+    led=5;
+int segA=7,
+    segB=8,
+    segC=11,
+    segD=12,
+    segE=13,
+    segF=6,
+    segG=10,
+    dot=9;
+    int COUNT=0,flag=0,x=0,wait=0;
+
+
+int segment(int COUNT)
+
+{
+    switch (COUNT)
+                {
+
+               case 0:
+                {
+                digitalWrite(segA, HIGH);
+                digitalWrite(segB, HIGH);
+                digitalWrite(segC, HIGH);
+                digitalWrite(segD, HIGH);
+                digitalWrite(segE, HIGH);
+                digitalWrite(segF, HIGH);
+                digitalWrite(segG, LOW);
+                break;
+                }
+                case 1:
+                {
+                digitalWrite(segA, LOW);
+                digitalWrite(segB, HIGH);
+                digitalWrite(segC, HIGH);
+                digitalWrite(segD, LOW);
+                digitalWrite(segE, LOW);
+                digitalWrite(segF, LOW);
+                digitalWrite(segG, LOW);
+                break;
+                }
+                case 2:
+                {
+                digitalWrite(segA, HIGH);
+                digitalWrite(segB, HIGH);
+                digitalWrite(segC, LOW);
+                digitalWrite(segD, HIGH);
+                digitalWrite(segE, HIGH);
+                digitalWrite(segF, LOW);
+                digitalWrite(segG, HIGH);
+                break;
+                }
+                case 3:
+                 {
+                digitalWrite(segA, HIGH);
+                digitalWrite(segB, HIGH);
+                digitalWrite(segC, HIGH);
+                digitalWrite(segD, HIGH);
+               digitalWrite(segE, LOW);
+                digitalWrite(segF, LOW);
+               digitalWrite(segG, HIGH);
+                break;
+                 }
+                case 4:
+               {
+                digitalWrite(segA, LOW);
+                digitalWrite(segB, HIGH);
+                digitalWrite(segC, HIGH);
+                digitalWrite(segD, LOW);
+                digitalWrite(segE, LOW);
+                digitalWrite(segF, HIGH);
+                digitalWrite(segG, HIGH);
+                break;
+                 }              case 5:// when count value is 5 show”5” on disp
+                {
+                digitalWrite(segA, HIGH);
+                digitalWrite(segB, LOW);
+                digitalWrite(segC, HIGH);
+                digitalWrite(segD, HIGH);
+                digitalWrite(segE, LOW);
+                digitalWrite(segF, HIGH);
+                digitalWrite(segG, HIGH);
+                break;
+                }
+ 
+
+                case 6:
+                {
+                digitalWrite(segA, HIGH);
+                digitalWrite(segB, LOW);
+                digitalWrite(segC, HIGH);
+                digitalWrite(segD, HIGH);
+                digitalWrite(segE, HIGH);
+                digitalWrite(segF, HIGH);
+                digitalWrite(segG, HIGH);
+                break;
+                }
+                 case 7:
+                 {
+                digitalWrite(segA, HIGH);
+                digitalWrite(segB, HIGH);
+                digitalWrite(segC, HIGH);
+                digitalWrite(segD, LOW);
+                digitalWrite(segE, LOW);
+                digitalWrite(segF, LOW);
+                digitalWrite(segG, LOW);
+                break;
+                 }
+ 
+
+                case 8:
+                {
+                digitalWrite(segA, HIGH);
+                digitalWrite(segB, HIGH);
+                digitalWrite(segC, HIGH);
+                digitalWrite(segD, HIGH);
+                digitalWrite(segE, HIGH);
+                digitalWrite(segF, HIGH);
+                digitalWrite(segG, HIGH);
+                break;
+                }
+ 
+               case 9:
+                {
+                digitalWrite(segA, HIGH);
+                digitalWrite(segB, HIGH);
+                digitalWrite(segC, HIGH);
+                digitalWrite(segD, HIGH);
+                digitalWrite(segE, LOW);
+                digitalWrite(segF, HIGH);
+                digitalWrite(segG, HIGH);
+                break;
+
+                }
+          }
+     
+       }
+
+         void dton()
+       {
+        digitalWrite(dot, HIGH);
+        }
+          void dtoff()
+       {
+        digitalWrite(dot, 0);
+        }
+
+        int start(int i)
+      {
+           digitalWrite(led2,1);
+           delay(100);
+           digitalWrite(led2,0);
+           delay(100);
+           digitalWrite(led2,1);
+           delay(100);
+           digitalWrite(led2,0);
+           
+            Serial.println("Service started");
+           digitalWrite(relay,1);
+           delay((i*1000));
+           digitalWrite(relay,0);
+           digitalWrite(led,0);
+           Serial.println("Service ended");
+            dton();
+            segment(x);
+
+        }
+                
+
+void setup() {
+
+  Serial.begin(9600);
+  pinMode(6,OUTPUT);
+  pinMode(7,OUTPUT);
+  pinMode(8,OUTPUT);
+  pinMode(9,OUTPUT);
+  pinMode(10,OUTPUT);
+  pinMode(11,OUTPUT);
+  pinMode(12,OUTPUT);
+  pinMode(13,OUTPUT);
+  pinMode(2,OUTPUT);
+  pinMode(3,OUTPUT);
+  pinMode(5,OUTPUT);
+  pinMode(0,INPUT_PULLUP);
+  pinMode(1,INPUT_PULLUP);
+  pinMode(4,INPUT_PULLUP);
+  Serial.println("Ready");
+
+digitalWrite(led2,0);
+ digitalWrite(led,1);
+ delay(100);
+ digitalWrite(led,0);
+ delay(100);
+ digitalWrite(led,1);
+ delay(100);
+ digitalWrite(led,0);
+ delay(100);
+ digitalWrite(led,1);
+
+  while(enter!=0 && flag ==0)
+  {
+      if(btnup==0 && x<6)
+        {
+          
+            x++;
+            Serial.println(x);
+          }else
+       if(btndown==0 && x>0)
+        {
+          
+            x--;
+            Serial.println(x);
+          }
+        if(x<6)
+          {
+              dton();
+            segment(x);
+          }
+
+         if(x>5  && x<10)
+          {
+              dtoff();
+            segment((x-5));
+          }  
+         
+
+         
+    }
+
+ digitalWrite(led2,1);
+ delay(100);
+ digitalWrite(led2,0);
+ delay(100);
+ digitalWrite(led2,1);
+ delay(100);
+ digitalWrite(led2,0);
+ delay(100);
+ digitalWrite(led2,1);
+
+
+if(x==1)
+  wait=1;
+
+  if(x==2)
+  wait=2;
+
+  if(x==3)
+  wait=3;
+
+  if(x==4)
+  wait=4;
+  
+  if(x==5)
+  wait=5;
+
+  if(x==6)
+  wait=60;
+
+  if(x==7)
+  wait=120;
+
+  if(x==8)
+  wait=180;
+
+  if(x==9)
+  wait=240;
+
+  
+  delay(10);
+
+  if(wait > 0)
+
+  {
+    start(wait);
+    }
+
+    
+
+}
+
+void loop() {
+
+
+  
+           dtoff();
+           digitalWrite(led2,1);
+           delay(500);
+           digitalWrite(led2,0);
+           delay(500);
+           digitalWrite(led,0);
+           dton();
+           segment(0);
+
+  
+  
+}
